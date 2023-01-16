@@ -1,14 +1,11 @@
-class Voiture:
-    nb_voiture = 0
-    def __init__(self, couleur):
-        Voiture.nb_voiture += 1
-        self.couleur = couleur
-    def avancer(self):
-        print("La voiture", self.couleur, "avance vite")
+import pygame
+pygame.init()
 
-voiture1 = Voiture('Rouge')
-voiture1.avancer()
-voiture2 = Voiture('Jaune')
-voiture2.avancer()
-voiture3 = Voiture("Vert")
-voiture3.avancer()
+pygame.display.set_caption("Basketball Versus")
+pygame.display.set_mode((1080, 720))
+running = True
+while running:
+    for event in pygame.event.get():
+        if event == pygame.QUIT:
+            running = False
+            pygame.quit()
