@@ -10,3 +10,6 @@ while running:
         if event == pygame.QUIT:
             running = False
             pygame.quit()
+
+if not running:
+    print('La jeu est finit !')
