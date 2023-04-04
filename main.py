@@ -1,32 +1,12 @@
-import pygame
-from game import Game
-from math import *
-pygame.init()
-
-pygame.display.set_icon(pygame.image.load("assets/basketball.png"))
-pygame.display.set_caption("Basketball Versus")
-screen = pygame.display.set_mode((1080, 720))
-backgroud = pygame.image.load("assets/demiterrain.png")
-running = True
-game = Game()
-while running:
-    screen.blit(backgroud, backgroud.get_rect())
-    screen.blit(game.joueur.balle.image, game.joueur.balle.rect)
-    screen.blit(game.joueur.image, game.joueur.rect)
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            running = False
-            pygame.quit()
-        if event.type == pygame.KEYDOWN:
-            game.keyPressed[event.key] = True
-            if event.key == pygame.K_SPACE:
-                game.joueur.launchBall = True
-        if event.type == pygame.KEYUP:
-            game.keyPressed[event.key] = False
-    if game.keyPressed.get(pygame.K_d):
-        game.joueur.moveRight()
-    if game.keyPressed.get(pygame.K_q):
-        game.joueur.moveLeft()
-    if game.joueur.launchBall:
-        game.joueur.launch()
-    pygame.display.flip()
+import tkinter
+root = tkinter.Tk()
+root.title("VollEfrei")
+root.iconphoto(False, tkinter.PhotoImage(file="assets/volley-transparent.png"))
+can = tkinter.Canvas(root, width=1280, height=720)
+backGround = tkinter.PhotoImage(file="assets/fond_decran_volleyefrei_2.png")
+width = backGround.width()
+height = backGround.height()
+can.create_image(width//2, height//2, image=backGround)
+can.place(x=0,y=0)
+root.geometry("%dx%d+0+0" % (width, height))
+root.mainloop()
