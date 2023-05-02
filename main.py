@@ -1,41 +1,76 @@
-import tkinter
-from tkinter import *
-import Ecran
-def fullscreen():
-    is_fullscreen=root.attributes('-fullscreen')
-    root.attributes('-fullscreen', not is_fullscreen)
-    set_background_image(backGround_path,10,10)
+import pygame
 
-def set_background_image(backGround_path, width, height):
-    canvas = root.canvas
-    backGround = PhotoImage(file=backGround_path)
-    backGround = backGround.subsample(backGround.width() // width, backGround.height() // height)
-    canvas.create_image(0, 0, image=backGround, anchor="nw")
-    canvas.image = backGround
+# Initialisation de Pygame
+pygame.init()
 
-root = tkinter.Tk()
-root.title("VollEfrei")
-root.iconphoto(False, tkinter.PhotoImage(file="assets/volley-transparent.png"))
-can = tkinter.Canvas(root, width=1280, height=720)
-backGround_path="assets/fond_decran_volleyefrei_2.png"
-backGround = tkinter.PhotoImage(file=backGround_path)
-width = backGround.width()
-height = backGround.height()
-can.create_image(width//2, height//2, image=backGround)
-can.place(x=0,y=0)
-can.pack()
-root.geometry("%dx%d+0+0" % (width, height))
+# Définition des dimensions de la fenêtre
+window_width = 1280
+window_height = 720
 
-menuBar= Menu (root)
-root.config(menu=menuBar)
-menuRéglages = Menu(menuBar, tearoff=0)
-menuParamètres=Menu(menuRéglages, tearoff=0)
-menuEcran=Menu(menuParamètres,tearoff=0)
-menuBar.add_cascade(label="Réglages",menu=menuRéglages)
-menuRéglages.add_cascade(label="Paramètres",menu=menuParamètres)
-menuRéglages.add_command(label="Fermer le jeu",command=quit)
-menuParamètres.add_cascade(label="Ecran",menu=menuEcran)
-menuParamètres.add_command(label="Touches")
-menuEcran.add_command(label="Plein écran",command=fullscreen)
+# Création de la fenêtre avec le titre "VollEfrei"
+window = pygame.display.set_mode((window_width, window_height))
+pygame.display.set_caption("VollEfrei")
 
-root.mainloop()
+# Chargement de l'image du logo
+logo = pygame.image.load("assets/logo.png")
+
+# Définition du logo de la fenêtre
+pygame.display.set_icon(logo)
+
+# Chargement de l'image de fond
+background_image = pygame.image.load("assets/background.png")
+background_image = background_image.convert()
+
+player1_x = 200
+player1_y = 400
+player1_is_jumping = False
+
+player2_x = 1000
+player2_y = 400
+player2_is_jumping = False
+
+players_jump_speed = 1
+players_jump_height = 200
+players_speed = 1
+
+
+# Boucle principale du jeu
+while True:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            exit()
+        elif event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_ESCAPE:
+                pygame.quit()
+                quit()
+    keys = pygame.key.get_pressed()
+    if keys[pygame.K_q] and player1_x > 40:
+        player1_x -= players_speed
+    if keys[pygame.K_d] and player1_x < 525:
+        player1_x += players_speed
+    if keys[pygame.K_LEFT] and player2_x > 650:
+        player2_x -= players_speed
+    if keys[pygame.K_RIGHT] and player2_x < 1175:
+        player2_x += players_speed
+    if keys[pygame.K_z] and player1_y == 400:
+        player1_is_jumping = True
+    if keys[pygame.K_UP] and player2_y == 400:
+        player2_is_jumping = True
+
+    if player1_is_jumping and player1_y > 400-players_jump_height:
+        player1_y -= players_jump_speed
+    elif player1_y < 400:
+        player1_is_jumping = False
+        player1_y += players_jump_speed
+
+    if player2_is_jumping and player2_y > 400-players_jump_height:
+        player2_y -= players_jump_speed
+    elif player2_y < 400:
+        player2_is_jumping = False
+        player2_y += players_jump_speed
+
+    window.blit(background_image, (0, 0))
+    pygame.draw.rect(window, 255, pygame.Rect(player1_x, player1_y, 100, 200))
+    pygame.draw.rect(window, 255, pygame.Rect(player2_x, player2_y, 100, 200))
+    pygame.display.update()
