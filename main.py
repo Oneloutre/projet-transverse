@@ -1,4 +1,6 @@
 import pygame
+import ManagePlayers
+import ManageScreen
 
 # Initialisation de Pygame
 pygame.init()
@@ -21,56 +23,27 @@ pygame.display.set_icon(logo)
 background_image = pygame.image.load("assets/background.png")
 background_image = background_image.convert()
 
-player1_x = 200
-player1_y = 400
-player1_is_jumping = False
 
-player2_x = 1000
-player2_y = 400
-player2_is_jumping = False
+player1 = {"x": 200, "y": 300, "jumping": False}
+player2 = {"x": 1000, "y": 300, "jumping": False}
 
-players_jump_speed = 1
-players_jump_height = 200
-players_speed = 1
+playersParameters = {"speed": 1, "jumpSpeed": 1, "jumpHeight": 200}
+
+player1Image = pygame.image.load("assets/spritePlayer.png").convert_alpha()
+player2Image = pygame.transform.flip(player1Image, True, False)
+# playerImage = pygame.transform.scale(playerImage, (100, 200))
 
 
 # Boucle principale du jeu
 while True:
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            pygame.quit()
-            exit()
-        elif event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_ESCAPE:
-                pygame.quit()
-                quit()
-    keys = pygame.key.get_pressed()
-    if keys[pygame.K_q] and player1_x > 40:
-        player1_x -= players_speed
-    if keys[pygame.K_d] and player1_x < 525:
-        player1_x += players_speed
-    if keys[pygame.K_LEFT] and player2_x > 650:
-        player2_x -= players_speed
-    if keys[pygame.K_RIGHT] and player2_x < 1175:
-        player2_x += players_speed
-    if keys[pygame.K_z] and player1_y == 400:
-        player1_is_jumping = True
-    if keys[pygame.K_UP] and player2_y == 400:
-        player2_is_jumping = True
 
-    if player1_is_jumping and player1_y > 400-players_jump_height:
-        player1_y -= players_jump_speed
-    elif player1_y < 400:
-        player1_is_jumping = False
-        player1_y += players_jump_speed
-
-    if player2_is_jumping and player2_y > 400-players_jump_height:
-        player2_y -= players_jump_speed
-    elif player2_y < 400:
-        player2_is_jumping = False
-        player2_y += players_jump_speed
+    ManageScreen.leave()
+    ManagePlayers.move(player1, playersParameters)
+    ManagePlayers.move(player2, playersParameters)
+    ManagePlayers.jump(player1, playersParameters)
+    ManagePlayers.jump(player2, playersParameters)
 
     window.blit(background_image, (0, 0))
-    pygame.draw.rect(window, 255, pygame.Rect(player1_x, player1_y, 100, 200))
-    pygame.draw.rect(window, 255, pygame.Rect(player2_x, player2_y, 100, 200))
+    window.blit(player1Image, (player1["x"], player1["y"]))
+    window.blit(player2Image, (player2["x"], player2["y"]))
     pygame.display.update()
