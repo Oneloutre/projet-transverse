@@ -10,8 +10,9 @@ import time
 pygame.init()
 window = pygame.display.set_mode((Models.BOX_WIDTH, Models.BOX_HEIGHT))
 pygame.display.set_caption("VollEfrei")
-# logo = pygame.image.load("assets/logo.png")
-# pygame.display.set_icon(logo)
+logo = pygame.image.load("assets/logo.png").convert()
+icon = pygame.transform.scale(logo, (32, 32))
+pygame.display.set_icon(icon)
 background_image = pygame.image.load("assets/FOND_VOLLEYPONG.png")
 background_image = background_image.convert()
 
