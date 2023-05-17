@@ -1,7 +1,6 @@
 import pygame
 
 import ManageMenu
-import ManageScreen
 import Models
 
 pygame.init()
@@ -29,7 +28,8 @@ quit_button_rect = quit_button_image.get_rect(center=(Models.BOX_WIDTH//2, 600))
 
 while True:
     for event in pygame.event.get():
-        if event.type == pygame.QUIT:
+        keys = pygame.key.get_pressed()
+        if (event.type == pygame.QUIT) or (keys[pygame.K_ESCAPE]):
             pygame.quit()
             exit()
         elif event.type == pygame.MOUSEBUTTONDOWN:
@@ -38,6 +38,8 @@ while True:
                     ManageMenu.launchGame(window)
                 elif credits_button_rect.collidepoint(event.pos):
                     ManageMenu.launchCredits(window, background_menu_image, quit_button_image, quit_button_rect)
+                elif settings_button_rect.collidepoint(event.pos):
+                    ManageMenu.launchSettings(window, background_menu_image, quit_button_image, quit_button_rect)
                 elif quit_button_rect.collidepoint(event.pos):
                     pygame.quit()
                     exit()

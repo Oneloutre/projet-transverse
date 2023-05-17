@@ -80,4 +80,5 @@ def placeBall(x, y, angle):
                    'angle': angle,
                    'radius': Models.INITIAL_RADIUS,
                    'visible': True,
-                   'timer': Models.INITIAL_TIMER}
+                   'timer': Models.INITIAL_TIMER,
+                   'color': Models.INITIAL_BALL_COLOR}

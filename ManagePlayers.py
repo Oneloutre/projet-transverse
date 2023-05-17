@@ -14,3 +14,5 @@ def move(player):
             player["x"] -= Models.INITIAL_PLAYER_SPEED
         if keys[pygame.K_RIGHT] and player["x"] < Models.BOX_WIDTH-Models.player2["width"]:
             player["x"] += Models.INITIAL_PLAYER_SPEED
+
+
