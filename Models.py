@@ -7,12 +7,14 @@ INITIAL_PLAYER_SPEED = 2
 
 INITIAL_PLAYER_COLOR = 'blue'
 
-SCORE_MAX = 3
+SCORE_MAX = 10
+
+DIFFICULTY = 4
 
 """ The gravity, g."""
 GRAVITY = 9.80665
 """ The time interval, Δt."""
-INTERVAL = 0.03
+INTERVAL = 0.04
 """ The friction on left an right, frictionX."""
 FRICTION_X = 0.95
 """ The friction on ground, frictionY."""

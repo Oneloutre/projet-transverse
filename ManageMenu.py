@@ -75,6 +75,8 @@ def launchSettings(window, background, quitButton, quitButtonRect):
     dictOfPlayersRects = returnDictOfPlayersRects()
     initialRectBall = ManageScreen.returnRectOfBall(320, 320)
     dictOfBallsRects = returnDictOfBallsRects()
+    addDifficultyRect = pygame.Rect(75, 550, 30, 30)
+    removeDifficultyRect = pygame.Rect(175, 550, 30, 30)
     quitSettings = False
     while not quitSettings:
         window.blit(background, (0, 0))
@@ -85,6 +87,8 @@ def launchSettings(window, background, quitButton, quitButtonRect):
         ManageScreen.displayOnScreen(window, "Ball Color:", 50, 300, "white", 30)
         ManageScreen.drawBallRect(window, Models.INITIAL_BALL_COLOR, initialRectBall)
         ManageScreen.drawDictOfBallRect(window, dictOfBallsRects)
+        ManageScreen.displayOnScreen(window, "Difficulty", 50, 500, "white", 30)
+        ManageScreen.displayOnScreen(window, "+  " + str(Models.DIFFICULTY) + "  -", 75, 550, "white", 30)
         pygame.display.update()
         for event in pygame.event.get():
             keys = pygame.key.get_pressed()
@@ -95,9 +99,16 @@ def launchSettings(window, background, quitButton, quitButtonRect):
                 if event.button == 1:  # Bouton gauche de la souris
                     if quitButtonRect.collidepoint(event.pos):
                         quitSettings = True
+                    if addDifficultyRect.collidepoint(event.pos):
+                        if Models.DIFFICULTY < 9:
+                            Models.DIFFICULTY += 1
+                            Models.INTERVAL = Models.DIFFICULTY*0.01
+                    if removeDifficultyRect.collidepoint(event.pos):
+                        if Models.DIFFICULTY > 1:
+                            Models.DIFFICULTY -= 1
+                            Models.INTERVAL = Models.DIFFICULTY*0.01
                     collisionToSwitchPlayerColorWithDict(dictOfPlayersRects, event.pos)
                     collisionToSwitchBallColorWithDict(dictOfBallsRects, event.pos)
-
 
 def returnDictOfPlayersRects():
     RedRectPlayer = ManageScreen.returnRectOfPlayer(100, 225)
