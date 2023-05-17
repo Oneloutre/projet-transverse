@@ -15,7 +15,7 @@ background_image = background_image.convert()
 
 while not Models.QUIT:
     if Models.MENU:
-        pass
+        Models.MENU = False
     else:
         ManageScreen.leave()
         window.blit(background_image, (0, 0))
@@ -34,7 +34,7 @@ while not Models.QUIT:
             ManagePlayers.move(Models.player2)
         else:
             ManageScreen.displayFinalScore(window)
+            Models.MENU = True
         ManageScreen.displayOnScreen(window, str(Models.player1["points"]) + " - " + str(Models.player2["points"]), 500, 0,
                                      (255, 255, 255), 100)
-        Models.MENU = True
     pygame.display.update()
