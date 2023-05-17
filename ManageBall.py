@@ -55,14 +55,14 @@ def collisionPlayers(ball_rect, playerRect, player):
             Models.ball['speedY'] = - Models.ball['speedY']
             if 90 < Models.ball['angle'] < 270:
                 if player["move"] == 1:
-                    Models.ball['speedX'] += 10
+                    Models.ball['speedX'] += 5
                 elif player["move"] == -1:
-                    Models.ball['speedX'] -= 10
+                    Models.ball['speedX'] -= 5
             else:
                 if player["move"] == 1:
-                    Models.ball['speedX'] -= 10
+                    Models.ball['speedX'] -= 5
                 elif player["move"] == -1:
-                    Models.ball['speedX'] += 10
+                    Models.ball['speedX'] += 5
 
 
 def collisionGround(ball_rect):
