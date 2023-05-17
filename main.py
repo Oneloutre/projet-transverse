@@ -1,44 +1,51 @@
-import math
-
 import pygame
-import ManagePlayers
-import ManageScreen
-import ManageBall
+
+import ManageMenu
 import Models
-import time
 
 pygame.init()
 window = pygame.display.set_mode((Models.BOX_WIDTH, Models.BOX_HEIGHT))
+pygame.display.set_caption("Menu")
+
+# Chargement des images
 pygame.display.set_caption("VollEfrei")
 logo = pygame.image.load("assets/logo.png").convert()
 icon = pygame.transform.scale(logo, (32, 32))
 pygame.display.set_icon(icon)
-background_image = pygame.image.load("assets/FOND_VOLLEYPONG.png")
-background_image = background_image.convert()
+background_menu_image = pygame.image.load("assets/MENU_DEBUT_PONG.png")
+background_menu_image = background_menu_image.convert()
 
-while Models.player1["points"] < Models.SCORE_MAX and Models.player2["points"] < Models.SCORE_MAX:
-    ManageScreen.leave()
-    window.blit(background_image, (0, 0))
-    scoreBoard = pygame.font.SysFont("monospace", 100).render(
-        str(Models.player1["points"]) + " - " + str(Models.player2["points"]), True, (255, 255, 255))
-    window.blit(scoreBoard, (500, 0))
-    pygame.draw.rect(window, (255, 0, 0), pygame.Rect(Models.player1["x"], Models.player1["y"], Models.player1["width"],
-                                                      Models.player1["height"]))
-    pygame.draw.rect(window, (255, 0, 0), pygame.Rect(Models.player2["x"], Models.player2["y"], Models.player2["width"],
-                                                      Models.player2["height"]))
-    if Models.ball['visible']:
-        ManageBall.moveBall()
-        pygame.draw.circle(window, 255, (Models.ball["x"], Models.ball["y"]),
-                           Models.INITIAL_RADIUS)
-    ManagePlayers.move(Models.player1, Models.playersParameters)
-    ManagePlayers.move(Models.player2, Models.playersParameters)
+settings_button_image = pygame.image.load("assets/CASE_OPTIONS.png").convert_alpha()
+play_button_image = pygame.image.load("assets/CASE_JOUER.png").convert_alpha()
+credits_button_image = pygame.image.load("assets/CASE_CREDITS.png").convert_alpha()
+quit_button_image = pygame.image.load("assets/CASE_QUITTER.png").convert_alpha()
+
+# Positionnement des boutons
+settings_button_rect = settings_button_image.get_rect(center=(Models.BOX_WIDTH//2, 400))
+play_button_rect = play_button_image.get_rect(center=(Models.BOX_WIDTH//2, 300))
+credits_button_rect = credits_button_image.get_rect(center=(Models.BOX_WIDTH//2, 500))
+quit_button_rect = quit_button_image.get_rect(center=(Models.BOX_WIDTH//2, 600))
+
+while True:
+    for event in pygame.event.get():
+        keys = pygame.key.get_pressed()
+        if (event.type == pygame.QUIT) or (keys[pygame.K_ESCAPE]):
+            pygame.quit()
+            exit()
+        elif event.type == pygame.MOUSEBUTTONDOWN:
+            if event.button == 1:
+                if play_button_rect.collidepoint(event.pos):
+                    ManageMenu.launchGame(window)
+                elif credits_button_rect.collidepoint(event.pos):
+                    ManageMenu.launchCredits(window, background_menu_image, quit_button_image, quit_button_rect)
+                elif settings_button_rect.collidepoint(event.pos):
+                    ManageMenu.launchSettings(window, background_menu_image, quit_button_image, quit_button_rect)
+                elif quit_button_rect.collidepoint(event.pos):
+                    pygame.quit()
+                    exit()
+    window.blit(background_menu_image, (0, 0))
+    window.blit(play_button_image, play_button_rect)
+    window.blit(settings_button_image, settings_button_rect)
+    window.blit(credits_button_image, credits_button_rect)
+    window.blit(quit_button_image, quit_button_rect)
     pygame.display.update()
-if Models.player1["points"] == Models.SCORE_MAX:
-    Result = pygame.font.SysFont("monospace", 100).render("Joueur 1 a gagné !", True, (255, 0, 0))
-else:
-    Result = pygame.font.SysFont("monospace", 100).render("Joueur 2 a gagné !", True, (255, 0, 0))
-scoreBoard = pygame.font.SysFont("monospace", 100).render(
-        str(Models.player1["points"]) + " - " + str(Models.player2["points"]), True, (255, 255, 255))
-window.blit(Result, (120, 400))
-pygame.display.update()
-time.sleep(5)
