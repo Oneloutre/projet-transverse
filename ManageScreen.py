@@ -1,5 +1,6 @@
-import pygame
+import time
 
+import pygame
 import Models
 
 
@@ -50,3 +51,14 @@ def drawBallRect(window, color, rect):
 def drawDictOfBallRect(window, dict):
     for color in dict.keys():
         drawBallRect(window, color, dict[color])
+
+
+def timesleep(timesleep):
+    while timesleep > 0:
+        for event in pygame.event.get():
+            keys = pygame.key.get_pressed()
+            if (event.type == pygame.QUIT) or (keys[pygame.K_ESCAPE]):
+                pygame.quit()
+                exit()
+        time.sleep(0.1)
+        timesleep -= 1

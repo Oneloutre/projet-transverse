@@ -43,7 +43,7 @@ def launchGame(window):
             ManageScreen.displayOnScreen(window, str(Models.player1["points"]) + " - " + str(
                 Models.player2["points"]), 500, 0, (255, 255, 255), 100)
             pygame.display.update()
-            time.sleep(5)
+            ManageScreen.timesleep(50)
             endGame = True
 
 
@@ -149,5 +149,5 @@ def collisionToSwitchBallColorWithDict(dictOfBallsRects, event):
 
 def resetSettings():
     ManageBall.placeBall(Models.INITIAL_X, Models.INITIAL_Y, Models.INITIAL_ANGLE)
-    Models.player1 = {"points": 0, "x": 200, "y": 500, "width": 100, "height": 10}
-    Models.player2 = {"points": 0, "x": 1000, "y": 500, "width": 100, "height": 10}
+    Models.player1 = {"points": 0, "x": 200, "y": 500, "width": 100, "height": 10, "move": 0}
+    Models.player2 = {"points": 0, "x": 1000, "y": 500, "width": 100, "height": 10, "move": 0}

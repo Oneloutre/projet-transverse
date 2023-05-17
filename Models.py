@@ -1,7 +1,7 @@
 import math
 
-player1 = {"points": 0, "x": 200, "y": 500, "width": 100, "height": 10}
-player2 = {"points": 0, "x": 1000, "y": 500, "width": 100, "height": 10}
+player1 = {"points": 0, "x": 200, "y": 500, "width": 100, "height": 10, "move": 0}
+player2 = {"points": 0, "x": 1000, "y": 500, "width": 100, "height": 10, "move": 0}
 
 INITIAL_PLAYER_SPEED = 2
 
@@ -12,11 +12,11 @@ SCORE_MAX = 3
 """ The gravity, g."""
 GRAVITY = 9.80665
 """ The time interval, Δt."""
-INTERVAL = 0.04
+INTERVAL = 0.03
 """ The friction on left an right, frictionX."""
-FRICTION_X = 1
+FRICTION_X = 0.95
 """ The friction on ground, frictionY."""
-FRICTION_Y = 1
+FRICTION_Y = 0.85
 """ The box width in which the ball bounces."""
 BOX_WIDTH = 1280
 """ The box height in which the ball bounces."""
