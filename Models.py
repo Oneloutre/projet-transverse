@@ -1,5 +1,4 @@
 import math
-import pygame
 
 player1 = {"points": 0, "x": 200, "y": 500, "width": 100, "height": 10}
 player2 = {"points": 0, "x": 1000, "y": 500, "width": 100, "height": 10}
@@ -25,11 +24,13 @@ INITIAL_X = 50
 """ The initial position y(0) of the ball."""
 INITIAL_Y = 450
 """ The initial speed V(0) of the ball."""
-INITIAL_SPEED = 100
+INITIAL_SPEED = 105
 """ The initial angle α of the ball."""
 INITIAL_ANGLE = 60
 """ The radius of the ball."""
 INITIAL_RADIUS = 30
+
+INITIAL_TIMER = 900
 
 """ The ball at time 0."""
 ball = {'x': INITIAL_X,
@@ -38,4 +39,5 @@ ball = {'x': INITIAL_X,
         'speedY': INITIAL_SPEED * math.sin(math.radians(INITIAL_ANGLE)),
         'angle': INITIAL_ANGLE,
         'radius': INITIAL_RADIUS,
-        'visible': True}
+        'visible': True,
+        'timer': INITIAL_TIMER}

@@ -1,5 +1,3 @@
-import math
-
 import pygame
 import ManagePlayers
 import ManageScreen
@@ -26,10 +24,12 @@ while Models.player1["points"] < Models.SCORE_MAX and Models.player2["points"] <
                                                       Models.player1["height"]))
     pygame.draw.rect(window, (255, 0, 0), pygame.Rect(Models.player2["x"], Models.player2["y"], Models.player2["width"],
                                                       Models.player2["height"]))
-    if Models.ball['visible']:
+    if Models.ball['timer'] == 0:
         ManageBall.moveBall()
         pygame.draw.circle(window, 255, (Models.ball["x"], Models.ball["y"]),
                            Models.INITIAL_RADIUS)
+    else:
+        ManageScreen.timer3s(window)
     ManagePlayers.move(Models.player1, Models.playersParameters)
     ManagePlayers.move(Models.player2, Models.playersParameters)
     pygame.display.update()

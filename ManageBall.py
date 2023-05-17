@@ -7,7 +7,7 @@ def moveBall():
     Models.ball['x'] += Models.ball['speedX'] * math.cos(
         math.radians(Models.ball['angle'])) * Models.INTERVAL
     Models.ball['y'] -= Models.INTERVAL * (
-                Models.ball['speedY'] - (Models.GRAVITY * Models.INTERVAL))
+            Models.ball['speedY'] - (Models.GRAVITY * Models.INTERVAL))
     Models.ball['speedY'] += - Models.GRAVITY * Models.INTERVAL
     ball_rect = pygame.Rect(Models.ball['x'] - Models.ball['radius'], Models.ball['y'] - Models.ball['radius'],
                             2 * Models.ball['radius'], 2 * Models.ball['radius'])
@@ -33,7 +33,7 @@ def bouceX():
 def collisionFilet(ball_rect):
     FiletRect = pygame.Rect((Models.BOX_WIDTH // 2) + 3, Models.BOX_HEIGHT - 378, 14, 380)
     if ball_rect.colliderect(FiletRect):
-        if FiletRect.top-4 <= ball_rect.bottom <= FiletRect.top+4:
+        if FiletRect.top - 4 <= ball_rect.bottom <= FiletRect.top + 4:
             Models.ball['speedY'] = - Models.ball['speedY'] * Models.FRICTION_Y
             Models.ball['speedX'] = Models.ball['speedX'] * Models.FRICTION_X
         elif ball_rect.right == FiletRect.right:
@@ -44,7 +44,7 @@ def collisionFilet(ball_rect):
 
 def collisionPlayers(ball_rect, playerRect):
     if ball_rect.colliderect(playerRect):
-        if playerRect.left-4 <= ball_rect.right <= playerRect.left+4:
+        if playerRect.left - 4 <= ball_rect.right <= playerRect.left + 4:
             Models.ball["x"] = playerRect.left - Models.ball["radius"] - 4
             bouceX()
         if playerRect.right - 4 <= ball_rect.left <= playerRect.right + 4:
@@ -65,7 +65,6 @@ def collisionGround(ball_rect):
             placeBall(Models.INITIAL_RADIUS + 10, Models.INITIAL_Y, 60)
 
 
-
 def collisionLimits(ball_rect):
     if ball_rect.left == 0:
         bouceX()
@@ -75,10 +74,10 @@ def collisionLimits(ball_rect):
 
 def placeBall(x, y, angle):
     Models.ball = {'x': x,
-            'y': y,
-            'speedX': Models.INITIAL_SPEED * math.cos(math.radians(angle)),
-            'speedY': Models.INITIAL_SPEED * math.sin(math.radians(angle)),
-            'angle': angle,
-            'radius': Models.INITIAL_RADIUS,
-            'visible': True}
-
+                   'y': y,
+                   'speedX': Models.INITIAL_SPEED * math.cos(math.radians(angle)),
+                   'speedY': Models.INITIAL_SPEED * math.sin(math.radians(angle)),
+                   'angle': angle,
+                   'radius': Models.INITIAL_RADIUS,
+                   'visible': True,
+                   'timer': Models.INITIAL_TIMER}

@@ -1,5 +1,7 @@
 import pygame
 
+import Models
+
 
 def leave():
     for event in pygame.event.get():
@@ -10,3 +12,17 @@ def leave():
             if event.key == pygame.K_ESCAPE:
                 pygame.quit()
                 quit()
+
+
+def displayOnScreen(window, text, x, y, color, police):
+    window.blit(pygame.font.SysFont("monospace", police).render(text, True, color), (x, y))
+
+
+def timer3s(window):
+    if Models.ball['timer'] >= 2*(Models.INITIAL_TIMER/3):
+        displayOnScreen(window, "3", 590, 160, (255, 255, 255), 200)
+    elif Models.ball['timer'] >= (Models.INITIAL_TIMER/3):
+        displayOnScreen(window, "2", 590, 160, (255, 255, 255), 200)
+    else:
+        displayOnScreen(window, "1", 590, 160, (255, 255, 255), 200)
+    Models.ball['timer'] -= 1
