@@ -2,7 +2,7 @@ import math
 
 player1 = {"points": 0, "x": 200, "y": 500, "width": 100, "height": 10}
 player2 = {"points": 0, "x": 1000, "y": 500, "width": 100, "height": 10}
-playersParameters = {"speed": 2}
+INITIAL_PLAYER_SPEED = 2
 
 SCORE_MAX = 10
 
@@ -31,6 +31,10 @@ INITIAL_ANGLE = 60
 INITIAL_RADIUS = 30
 
 INITIAL_TIMER = 900
+
+QUIT = False
+
+MENU = True
 
 """ The ball at time 0."""
 ball = {'x': INITIAL_X,

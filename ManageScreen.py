@@ -26,3 +26,9 @@ def timer3s(window):
     else:
         displayOnScreen(window, "1", 590, 160, (255, 255, 255), 200)
     Models.ball['timer'] -= 1
+
+def displayFinalScore(window):
+    if Models.player1["points"] == Models.SCORE_MAX:
+        displayOnScreen(window, "Joueur 1 a gagné !", 100, 200, (255, 0, 0), 100)
+    else:
+        displayOnScreen(window, "Joueur 2 a gagné !", 100, 200, (255, 0, 0), 100)
