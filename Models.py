@@ -2,14 +2,14 @@ import math
 
 player1 = {"points": 0, "x": 200, "y": 500, "width": 100, "height": 10}
 player2 = {"points": 0, "x": 1000, "y": 500, "width": 100, "height": 10}
-INITIAL_PLAYER_SPEED = 2
+INITIAL_PLAYER_SPEED = 3
 
-SCORE_MAX = 10
+SCORE_MAX = 3
 
 """ The gravity, g."""
 GRAVITY = 9.80665
 """ The time interval, Δt."""
-INTERVAL = 0.04
+INTERVAL = 0.1
 """ The friction on left an right, frictionX."""
 FRICTION_X = 1
 """ The friction on ground, frictionY."""
@@ -30,9 +30,7 @@ INITIAL_ANGLE = 60
 """ The radius of the ball."""
 INITIAL_RADIUS = 30
 
-INITIAL_TIMER = 900
-
-QUIT = False
+INITIAL_TIMER = 600
 
 MENU = True
 
