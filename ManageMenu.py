@@ -6,18 +6,19 @@ import ManageScreen
 import ManageBall
 
 
-def launchGame(window):
+def launchGame(window, background):
+    backgroundGameImage = pygame.image.load("assets/FOND_VOLLEYPONG.png").convert_alpha()
     resetSettings()
-    background_image = pygame.image.load("assets/FOND_VOLLEYPONG.png")
-    background_image = background_image.convert()
     endGame = False
     while not endGame:
         for event in pygame.event.get():
             keys = pygame.key.get_pressed()
-            if (event.type == pygame.QUIT) or (keys[pygame.K_ESCAPE]):
+            if event.type == pygame.QUIT:
                 pygame.quit()
                 exit()
-        window.blit(background_image, (0, 0))
+            if keys[pygame.K_ESCAPE]:
+                breakInGame(window, background)
+        window.blit(backgroundGameImage, (0, 0))
         if Models.player1["points"] < Models.SCORE_MAX and Models.player2["points"] < Models.SCORE_MAX:
             pygame.draw.rect(window, Models.INITIAL_PLAYER_COLOR,
                              pygame.Rect(Models.player1["x"], Models.player1["y"],
@@ -106,11 +107,11 @@ def launchSettings(window, background, quitButton, quitButtonRect):
                     if addDifficultyRect.collidepoint(event.pos):
                         if Models.DIFFICULTY < 9:
                             Models.DIFFICULTY += 1
-                            Models.INTERVAL = Models.DIFFICULTY*0.01
+                            Models.INTERVAL = Models.DIFFICULTY * 0.01
                     if removeDifficultyRect.collidepoint(event.pos):
                         if Models.DIFFICULTY > 1:
                             Models.DIFFICULTY -= 1
-                            Models.INTERVAL = Models.DIFFICULTY*0.01
+                            Models.INTERVAL = Models.DIFFICULTY * 0.01
                     if addMaxPointRect.collidepoint(event.pos):
                         Models.SCORE_MAX += 1
                     if removeMaxPointRect.collidepoint(event.pos):
@@ -172,3 +173,28 @@ def resetSettings():
     ManageBall.placeBall(Models.INITIAL_X, Models.INITIAL_Y, Models.INITIAL_ANGLE)
     Models.player1 = {"points": 0, "x": 200, "y": 500, "width": 100, "height": 10, "move": 0}
     Models.player2 = {"points": 0, "x": 1000, "y": 500, "width": 100, "height": 10, "move": 0}
+
+
+def breakInGame(window, background):
+    quitButton = pygame.image.load("assets/CASE_QUITTER.png").convert_alpha()
+    quitButtonRect = quitButton.get_rect(center=(Models.BOX_WIDTH // 2, 600))
+    quitBreak = False
+    while not quitBreak:
+        window.blit(background, (0, 0))
+        window.blit(quitButton, quitButtonRect)
+        ManageScreen.displayOnScreen(window, str(Models.player1["points"]) + " - " + str(
+            Models.player2["points"]), 420, 200, (255, 255, 255), 150)
+        pygame.display.update()
+        for event in pygame.event.get():
+            keys = pygame.key.get_pressed()
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                exit()
+            if keys[pygame.K_ESCAPE]:
+                quitBreak = True
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                if event.button == 1:  # Bouton gauche de la souris
+                    if quitButtonRect.collidepoint(event.pos):
+                        pygame.quit()
+                        exit()
+

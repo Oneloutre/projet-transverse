@@ -35,7 +35,7 @@ while True:
         elif event.type == pygame.MOUSEBUTTONDOWN:
             if event.button == 1:
                 if play_button_rect.collidepoint(event.pos):
-                    ManageMenu.launchGame(window)
+                    ManageMenu.launchGame(window, background_menu_image)
                 elif credits_button_rect.collidepoint(event.pos):
                     ManageMenu.launchCredits(window, background_menu_image, quit_button_image, quit_button_rect)
                 elif settings_button_rect.collidepoint(event.pos):
