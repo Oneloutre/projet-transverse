@@ -77,6 +77,8 @@ def launchSettings(window, background, quitButton, quitButtonRect):
     dictOfBallsRects = returnDictOfBallsRects()
     addDifficultyRect = pygame.Rect(75, 550, 30, 30)
     removeDifficultyRect = pygame.Rect(175, 550, 30, 30)
+    addMaxPointRect = pygame.Rect(985, 550, 30, 30)
+    removeMaxPointRect = pygame.Rect(1100, 550, 30, 30)
     quitSettings = False
     while not quitSettings:
         window.blit(background, (0, 0))
@@ -89,6 +91,8 @@ def launchSettings(window, background, quitButton, quitButtonRect):
         ManageScreen.drawDictOfBallRect(window, dictOfBallsRects)
         ManageScreen.displayOnScreen(window, "Difficulty", 50, 500, "white", 30)
         ManageScreen.displayOnScreen(window, "+  " + str(Models.DIFFICULTY) + "  -", 75, 550, "white", 30)
+        ManageScreen.displayOnScreen(window, "Score", 1000, 500, "white", 30)
+        ManageScreen.displayOnScreen(window, "+  " + str(Models.SCORE_MAX) + "  -", 985, 550, "white", 30)
         pygame.display.update()
         for event in pygame.event.get():
             keys = pygame.key.get_pressed()
@@ -107,8 +111,14 @@ def launchSettings(window, background, quitButton, quitButtonRect):
                         if Models.DIFFICULTY > 1:
                             Models.DIFFICULTY -= 1
                             Models.INTERVAL = Models.DIFFICULTY*0.01
+                    if addMaxPointRect.collidepoint(event.pos):
+                        Models.SCORE_MAX += 1
+                    if removeMaxPointRect.collidepoint(event.pos):
+                        if Models.SCORE_MAX > 0:
+                            Models.SCORE_MAX -= 1
                     collisionToSwitchPlayerColorWithDict(dictOfPlayersRects, event.pos)
                     collisionToSwitchBallColorWithDict(dictOfBallsRects, event.pos)
+
 
 def returnDictOfPlayersRects():
     RedRectPlayer = ManageScreen.returnRectOfPlayer(100, 225)
