@@ -1,4 +1,5 @@
 import time
+
 import ManagePlayers
 import Models
 import pygame
@@ -8,7 +9,6 @@ import ManageBall
 
 def launchGame(window, background):
     backgroundGameImage = pygame.image.load("assets/FOND_VOLLEYPONG.png").convert_alpha()
-    resetSettings()
     endGame = False
     while not endGame:
         for event in pygame.event.get():
@@ -32,7 +32,7 @@ def launchGame(window, background):
                 ManageBall.moveBall()
             else:
                 ManageScreen.timer3s(window)
-            pygame.draw.circle(window, Models.ball["color"], (Models.ball["x"], Models.ball["y"]),
+            pygame.draw.circle(window, Models.INITIAL_BALL_COLOR, (Models.ball["x"], Models.ball["y"]),
                                Models.INITIAL_RADIUS)
             ManagePlayers.move(Models.player1)
             ManagePlayers.move(Models.player2)
@@ -40,33 +40,53 @@ def launchGame(window, background):
                 Models.player2["points"]), 500, 0, (255, 255, 255), 100)
             pygame.display.update()
         else:
-            ManageScreen.displayFinalScore(window)
-            ManageScreen.displayOnScreen(window, str(Models.player1["points"]) + " - " + str(
-                Models.player2["points"]), 500, 0, (255, 255, 255), 100)
-            pygame.display.update()
-            ManageScreen.timesleep(50)
             endGame = True
+            displayFinalScore(window, backgroundGameImage, background)
+            resetSettings()
+
+
+def displayFinalScore(window, backgroundGameImage, backGroundSettingsImage):
+    timesleep = 50
+    while timesleep > 0:
+        if Models.player1["points"] == Models.SCORE_MAX:
+            ManageScreen.displayOnScreen(window, "GAGNANT", 100, 200, (0, 255, 0), 100)
+            ManageScreen.displayOnScreen(window, "PERDANT", 800, 200, (255, 0, 0), 100)
+        else:
+            ManageScreen.displayOnScreen(window, "GAGNANT", 800, 200, (0, 255, 0), 100)
+            ManageScreen.displayOnScreen(window, "PERDANT", 100, 200, (255, 0, 0), 100)
+        ManageScreen.displayOnScreen(window, str(Models.player1["points"]) + " - " + str(
+            Models.player2["points"]), 500, 0, (255, 255, 255), 100)
+        pygame.display.update()
+        keys = pygame.key.get_pressed()
+        if keys[pygame.K_ESCAPE]:
+            breakInGame(window, backGroundSettingsImage)
+            window.blit(backgroundGameImage, (0, 0))
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                exit()
+        time.sleep(0.1)
+        timesleep -= 1
 
 
 def launchCredits(window, background, quitButton, quitButtonRect):
     QuitCredit = False
+    window.blit(background, (0, 0))
+    window.blit(quitButton, quitButtonRect)
+    ManageScreen.displayOnScreen(window, "Valentin Le Gall", 435, 200, (63, 72, 204), 45)
+    ManageScreen.displayOnScreen(window, "Luc Martrenchar", 450, 275, (63, 72, 204), 45)
+    ManageScreen.displayOnScreen(window, "Roch Triomphe", 475, 350, (63, 72, 204), 45)
+    ManageScreen.displayOnScreen(window, "Mélia Tanguy", 480, 425, (63, 72, 204), 45)
+    ManageScreen.displayOnScreen(window, "Alban Sulpice", 465, 500, (63, 72, 204), 45)
+    pygame.display.update()
     while not QuitCredit:
-        window.blit(background, (0, 0))
-        window.blit(quitButton, quitButtonRect)
-        ManageScreen.displayOnScreen(window, "Valentin Le Gall", 435, 200, (63, 72, 204), 45)
-        ManageScreen.displayOnScreen(window, "Luc Martrenchar", 450, 275, (63, 72, 204), 45)
-        ManageScreen.displayOnScreen(window, "Roch Triomphe", 475, 350, (63, 72, 204), 45)
-        ManageScreen.displayOnScreen(window, "Mélia Tanguy", 480, 425, (63, 72, 204), 45)
-        ManageScreen.displayOnScreen(window, "Alban Sulpice", 465, 500, (63, 72, 204), 45)
-        pygame.display.update()
         for event in pygame.event.get():
             keys = pygame.key.get_pressed()
             if (event.type == pygame.QUIT) or (keys[pygame.K_ESCAPE]):
                 pygame.quit()
                 exit()
             elif event.type == pygame.MOUSEBUTTONDOWN:
-                if event.button == 1:  # Bouton gauche de la souris
-
+                if event.button == 1:
                     if quitButtonRect.collidepoint(event.pos):
                         QuitCredit = True
 
@@ -96,8 +116,7 @@ def launchSettings(window, background, quitButton, quitButtonRect):
         ManageScreen.displayOnScreen(window, "+  " + str(Models.SCORE_MAX) + "  -", 985, 550, "white", 30)
         pygame.display.update()
         for event in pygame.event.get():
-            keys = pygame.key.get_pressed()
-            if (event.type == pygame.QUIT) or (keys[pygame.K_ESCAPE]):
+            if event.type == pygame.QUIT:
                 pygame.quit()
                 exit()
             elif event.type == pygame.MOUSEBUTTONDOWN:
@@ -114,9 +133,11 @@ def launchSettings(window, background, quitButton, quitButtonRect):
                             Models.INTERVAL = Models.DIFFICULTY * 0.01
                     if addMaxPointRect.collidepoint(event.pos):
                         Models.SCORE_MAX += 1
+                        removeMaxPointRect = pygame.Rect(1050 + (len(str(Models.SCORE_MAX)) * 30), 550, 30, 30)
                     if removeMaxPointRect.collidepoint(event.pos):
-                        if Models.SCORE_MAX > 0:
+                        if Models.SCORE_MAX > max(Models.player1["points"], Models.player2["points"]) + 1:
                             Models.SCORE_MAX -= 1
+                        removeMaxPointRect = pygame.Rect(1080 + (len(str(Models.SCORE_MAX)) * 15), 550, 30, 30)
                     collisionToSwitchPlayerColorWithDict(dictOfPlayersRects, event.pos)
                     collisionToSwitchBallColorWithDict(dictOfBallsRects, event.pos)
 
@@ -178,10 +199,16 @@ def resetSettings():
 def breakInGame(window, background):
     quitButton = pygame.image.load("assets/CASE_QUITTER.png").convert_alpha()
     quitButtonRect = quitButton.get_rect(center=(Models.BOX_WIDTH // 2, 600))
+    resumeButton = pygame.image.load("assets/CASE_REPRENDRE.png").convert_alpha()
+    resumeButtonRect = resumeButton.get_rect(center=(Models.BOX_WIDTH // 2, 400))
+    settingsButton = pygame.image.load("assets/CASE_OPTIONS.png").convert_alpha()
+    settingsButtonRect = settingsButton.get_rect(center=(Models.BOX_WIDTH // 2, 500))
     quitBreak = False
     while not quitBreak:
         window.blit(background, (0, 0))
         window.blit(quitButton, quitButtonRect)
+        window.blit(settingsButton, settingsButtonRect)
+        window.blit(resumeButton, resumeButtonRect)
         ManageScreen.displayOnScreen(window, str(Models.player1["points"]) + " - " + str(
             Models.player2["points"]), 420, 200, (255, 255, 255), 150)
         pygame.display.update()
@@ -193,8 +220,11 @@ def breakInGame(window, background):
             if keys[pygame.K_ESCAPE]:
                 quitBreak = True
             elif event.type == pygame.MOUSEBUTTONDOWN:
-                if event.button == 1:  # Bouton gauche de la souris
+                if event.button == 1:
                     if quitButtonRect.collidepoint(event.pos):
                         pygame.quit()
                         exit()
-
+                    if resumeButtonRect.collidepoint(event.pos):
+                        quitBreak = True
+                    if settingsButtonRect.collidepoint(event.pos):
+                        launchSettings(window, background, quitButton, quitButtonRect)

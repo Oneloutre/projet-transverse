@@ -22,5 +22,3 @@ def move(player):
             player["move"] = -1
         else:
             player["move"] = 0
-
-

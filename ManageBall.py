@@ -25,7 +25,6 @@ def moveBall():
     Models.ball['speedY'] += - Models.GRAVITY * Models.INTERVAL
 
 
-
 def bouceX():
     Models.ball['angle'] = (180 - Models.ball['angle']) % 360
 
@@ -89,6 +88,4 @@ def placeBall(x, y, angle):
                    'speedY': Models.INITIAL_SPEED * math.sin(math.radians(angle)),
                    'angle': angle,
                    'radius': Models.INITIAL_RADIUS,
-                   'visible': True,
-                   'timer': Models.INITIAL_TIMER,
-                   'color': Models.INITIAL_BALL_COLOR}
+                   'timer': Models.INITIAL_TIMER}

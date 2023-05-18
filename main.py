@@ -7,7 +7,6 @@ pygame.init()
 window = pygame.display.set_mode((Models.BOX_WIDTH, Models.BOX_HEIGHT))
 pygame.display.set_caption("Menu")
 
-# Chargement des images
 pygame.display.set_caption("VollEfrei")
 logo = pygame.image.load("assets/logo.png").convert()
 icon = pygame.transform.scale(logo, (32, 32))
@@ -20,7 +19,6 @@ play_button_image = pygame.image.load("assets/CASE_JOUER.png").convert_alpha()
 credits_button_image = pygame.image.load("assets/CASE_CREDITS.png").convert_alpha()
 quit_button_image = pygame.image.load("assets/CASE_QUITTER.png").convert_alpha()
 
-# Positionnement des boutons
 settings_button_rect = settings_button_image.get_rect(center=(Models.BOX_WIDTH//2, 400))
 play_button_rect = play_button_image.get_rect(center=(Models.BOX_WIDTH//2, 300))
 credits_button_rect = credits_button_image.get_rect(center=(Models.BOX_WIDTH//2, 500))
@@ -29,7 +27,7 @@ quit_button_rect = quit_button_image.get_rect(center=(Models.BOX_WIDTH//2, 600))
 while True:
     for event in pygame.event.get():
         keys = pygame.key.get_pressed()
-        if (event.type == pygame.QUIT) or (keys[pygame.K_ESCAPE]):
+        if event.type == pygame.QUIT:
             pygame.quit()
             exit()
         elif event.type == pygame.MOUSEBUTTONDOWN:

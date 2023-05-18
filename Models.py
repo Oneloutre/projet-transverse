@@ -46,6 +46,4 @@ ball = {'x': INITIAL_X,
         'speedY': INITIAL_SPEED * math.sin(math.radians(INITIAL_ANGLE)),
         'angle': INITIAL_ANGLE,
         'radius': INITIAL_RADIUS,
-        'visible': True,
-        'timer': INITIAL_TIMER,
-        'color': INITIAL_BALL_COLOR}
+        'timer': INITIAL_TIMER}
