@@ -92,9 +92,9 @@ def launchCredits(window, background, quitButton, quitButtonRect):
 
 
 def launchSettings(window, background, quitButton, quitButtonRect):
-    initialRectPlayer = ManageScreen.returnRectOfPlayer(350, 165)
+    initialRectPlayer = ManageScreen.returnRectOfPlayer(435, 180)
     dictOfPlayersRects = returnDictOfPlayersRects()
-    initialRectBall = ManageScreen.returnRectOfBall(320, 320)
+    initialRectBall = ManageScreen.returnRectOfBall(380, 320)
     dictOfBallsRects = returnDictOfBallsRects()
     addDifficultyRect = pygame.Rect(75, 550, 30, 30)
     removeDifficultyRect = pygame.Rect(175, 550, 30, 30)
@@ -104,10 +104,10 @@ def launchSettings(window, background, quitButton, quitButtonRect):
     while not quitSettings:
         window.blit(background, (0, 0))
         window.blit(quitButton, quitButtonRect)
-        ManageScreen.displayOnScreen(window, "Platform Color:", 50, 150, "white", 30)
+        ManageScreen.displayOnScreen(window, "Couleur Plateforme :", 50, 165, "white", 30)
         ManageScreen.drawPlayerRect(window, Models.INITIAL_PLAYER_COLOR, initialRectPlayer)
         ManageScreen.drawDictOfPlayerRect(window, dictOfPlayersRects)
-        ManageScreen.displayOnScreen(window, "Ball Color:", 50, 300, "white", 30)
+        ManageScreen.displayOnScreen(window, "Couleur Balle :", 50, 300, "white", 30)
         ManageScreen.drawBallRect(window, Models.INITIAL_BALL_COLOR, initialRectBall)
         ManageScreen.drawDictOfBallRect(window, dictOfBallsRects)
         ManageScreen.displayOnScreen(window, "Difficulty", 50, 500, "white", 30)
