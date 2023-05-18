@@ -1,5 +1,3 @@
-import time
-
 import pygame
 import Models
 
@@ -16,13 +14,6 @@ def timer3s(window):
     else:
         displayOnScreen(window, "1", 590, 160, (255, 255, 255), 200)
     Models.ball['timer'] -= 1
-
-
-def displayFinalScore(window):
-    if Models.player1["points"] == Models.SCORE_MAX:
-        displayOnScreen(window, "Joueur 1 a gagné !", 100, 200, (255, 0, 0), 100)
-    else:
-        displayOnScreen(window, "Joueur 2 a gagné !", 100, 200, (255, 0, 0), 100)
 
 
 def drawPlayerRect(window, color, rect):
@@ -51,14 +42,3 @@ def drawBallRect(window, color, rect):
 def drawDictOfBallRect(window, dict):
     for color in dict.keys():
         drawBallRect(window, color, dict[color])
-
-
-def timesleep(timesleep):
-    while timesleep > 0:
-        for event in pygame.event.get():
-            keys = pygame.key.get_pressed()
-            if (event.type == pygame.QUIT) or (keys[pygame.K_ESCAPE]):
-                pygame.quit()
-                exit()
-        time.sleep(0.1)
-        timesleep -= 1
