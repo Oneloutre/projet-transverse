@@ -80,8 +80,6 @@ def returnRectOfBall(x, y):
     ainsi que le rayon de la balle provenant du modèle Models.
     """
     # Crée et retourne un objet pygame.Rect représentant le rectangle de la balle
-    # Le rectangle est centré sur les coordonnées (x, y) spécifiées et a une largeur
-    # et une hauteur égale au double du rayon de la balle
     return pygame.Rect(x - Models.ball['radius'], y - Models.ball['radius'],
                        2 * Models.ball['radius'], 2 * Models.ball['radius'])
 
