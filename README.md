@@ -13,8 +13,8 @@ camp tout en essayant de marquer des
 points en amenant la balle à passer dans 
 le camp adverse.
 
-### Fonctionnalités
-#### Le jeu offre les fonctionnalités suivantes :
+## Fonctionnalités
+### Le jeu offre les fonctionnalités suivantes :
 
 - Contrôle des plateformes : Les joueurs peuvent déplacer 
 leurs plateformes verticalement pour frapper la balle.
